@@ -1,14 +1,12 @@
 <?php
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-		//$name = $_POST['customer_name'];
-		$id = $_POST['customer_id'];
+		$id = $_POST['put_ad'];
 		$from = $_POST['display_from'];
 		$till = $_POST['display_till'];
 		$header = $_POST['ad_header'];
 		$height = $_POST['ad_height'];
 		$width = $_POST['ad_width'];
 		$page = $_POST['ad_page'];
-		// echo $name.$off_id.$from.$till.$header.$height.$width.$page;
 
 		$servername = "localhost";
 		$username = "root";

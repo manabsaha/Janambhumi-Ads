@@ -2,47 +2,9 @@
 <html>
 <head>
 	<title>ad</title>
+	<link rel="stylesheet" href="/Janambhumi Ads/static/css/styles.css">
+	<script type="text/javascript" src="/Janambhumi Ads/static/js/scripts.js"></script>
 </head>
-<style>
-	/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 40%;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-</style>
 <body align="center">
 	<h3>View ads</h3>
 	<h5>ADD A FILTER SEARCH HERE: BY AD STATUS & CUSTOMER ID</h5>
@@ -102,7 +64,7 @@
 				    elseif($ad["ad_status"] == "approved"){
 				    	?>
 				    	<td>
-				    		<button id="bill_btn" value="<?php echo $ad["ad_id"] ?>">BILLING</button>
+				    		<button onclick="billing('<?php echo $ad["ad_id"] ?>')" value="<?php echo $ad["ad_id"] ?>">BILLING</button>
 				    	</td>
 				    	<?php
 				    }
@@ -133,9 +95,11 @@
 	  <div class="modal-content">
 	    <span class="close">&times;</span>
 	    <form action="/Janambhumi Ads/bills/gen_bill.php" method="post">
+	    	<label for="adv_id">Ad ID</label>
+	    	<input type="text" id="adv_id" name="adv_id" disabled="true"><br>
 	    	<label for="ad_bill">Ad bill (in Rs.)</label>
 	    	<input type="text" id="ad_bill" name="ad_bill"><br><br>
-	    	<button id="gen_bill" name="gen_bill">Generate Bill</button>
+	    	<button id="gen_bill" name="gen_bill" onclick="return confirm('Are you sure?')">Generate Bill</button>
 	    </form>
 	  </div>
 	</div>
@@ -143,11 +107,11 @@
 </body>
 <script>
 var modal = document.getElementById("myModal");
-var btn = document.getElementById("bill_btn");
 var span = document.getElementsByClassName("close")[0];
-btn.onclick = function() {
-  modal.style.display = "block";
-  document.getElementById("gen_bill").value = btn.value;
+function billing(ad_id){
+	modal.style.display = "block";
+	document.getElementById("gen_bill").value = ad_id;
+	document.getElementById("adv_id").value = ad_id;
 }
 span.onclick = function() {
   modal.style.display = "none";
