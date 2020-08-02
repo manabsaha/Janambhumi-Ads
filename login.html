@@ -2,13 +2,57 @@
 <html>
 <head>
 	<title>Test</title>
+	<link rel="stylesheet" href="static/css/styles.css">
 </head>
+<style>
+	.login-form{
+		height: 50%;
+		background-color: #000;
+		padding: 5% 5%;
+		opacity: 0.8;
+		border-radius: 4px;
+	}
+	.login-form h1{
+		margin-bottom: 5%;
+	}
+	.login-form input{
+		outline: none;
+		height: 4vh;
+	}
+	.login-form button{
+		padding: 2% 5%;
+		background-color: red;
+		border: none;
+		outline: none;
+		border-radius: 2px;
+		color: #fff;
+		transition: 0.4s;
+		font-size: 1.0em;
+		font-weight: bold;
+	}
+	.login-form button:hover{
+		transform: scale(1.1);
+		cursor: pointer;
+	}
+</style>
 <body align="center">
-	<h1>Login</h1>
-	<form action="checklogin.php" method="post">
-		<input type="text" name="number" placeholder="Number"><br><br>
-		<input type="password" name="password" placeholder="Password"><br><br>
-		<button>Login</button>
-	</form>
+	<nav>
+		<h3>দৈনিক জনমভূমি</h3>
+	</nav>
+	<div id="body">
+		<div id="middle" style="overflow: auto;padding: 2%;width: 60%;">
+			<div class="login-form">
+				<h1>LOGIN</h1>
+				<form action="checklogin.php" method="post">
+					<input type="text" name="number" placeholder="Number"><br><br>
+					<input type="password" name="password" placeholder="Password"><br><br>
+					<button>Login</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<p>All rights reserved 2020</p>
+	</footer>
 </body>
 </html>

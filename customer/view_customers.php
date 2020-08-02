@@ -1,68 +1,90 @@
+<?php
+	session_start();
+	if (!isset($_SESSION['userid'])){
+		header("Location: ../login.html");
+	}
+?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>ad</title>
-	<link rel="stylesheet" href="/Janambhumi Ads/static/css/styles.css">
-	<script type="text/javascript" src="/Janambhumi Ads/static/js/scripts.js"></script>
+	<title></title>
+	<link rel="stylesheet" href="../static/css/styles.css">
 </head>
-<body align="center">
-	<h2>View Customers</h2>
-	<h5>FILTER CUSTOMERS: BY NAME</h5>
-	<table border="2" align="center">
-		<tr>
-			<th>Customer ID</th>
-			<th>Customer Name</th>
-			<th>Address</th>
-			<th>Phone</th>
-			<th>Type</th>
-			<th>ID</th>
-			<th>ACTION</th>
-		</tr>
-		<?php
+<body>
+	<nav>
+		<h3>দৈনিক জনমভূমি</h3>
+		<ul>
+			<li onclick="window.location.href='../'">HOME</li>
+			<li class="active">CUSTOMERS</li>
+			<li onclick="window.location.href='../ads/view_ads.php'">ADVERTISEMENTS</li>
+			<li onclick="window.location.href='../bills/view_bills.php'">BILLS</li>
+			<li onclick="window.location.href='../customer/add_customer.php'">ADD CUSTOMER</li>
+			<li class="logout" onclick="window.location.href='../logout.php'">LOG OUT</li>
+		</ul>
+	</nav>
 
-			$servername = "localhost";
-			$username = "root";
-			$password = "root";
-			$dbname = "dj_ads";
-			$conn = mysqli_connect($servername, $username, $password,$dbname);
-			
-			if (!$conn) {
-			  	die("Connection failed: " . mysqli_connect_error());
-			}
-			else{
-				$sql = "SELECT * FROM customers";
-				$result = mysqli_query($conn, $sql);
-				if (mysqli_num_rows($result) > 0) {
-				  while($cust = mysqli_fetch_assoc($result)) {
-				  	?>
-				  	<tr>
-				    <td><?php echo $cust["cust_id"] ?></td>
-				    <td><?php echo $cust["cust_name"] ?></td>
-				    <td><?php echo $cust["cust_address"] ?></td>
-				    <td><?php echo $cust["cust_phone"] ?></td>
-				    <td><?php echo $cust["cust_type"] ?></td>
-				    <td><?php echo $cust["cust_off_id"] ?></td>
-				    <td>
-				    	<button onclick="put_ad('<?php echo $cust['cust_id'] ?>')" value="<?php echo $cust['cust_id'] ?>">Put AD</button>
-				    	<form action="/Janambhumi Ads/bills/pay_bills.php" method="post">
-				    		<button value="<?php echo $cust["cust_id"] ?>" name="pay_btn">Pay bill</button>
-				    	</form>
-				    </td>
-				    </tr>
-				    <?php
-				  }
-				}
-				else{
-					?>
-					<tr>
-						<td colspan="7">No records found</td>
-					</tr>
-					<?php
-				}
-				mysqli_close($conn);
-			}
-		?>
-	</table>
+	<div id="body">
+		
+		<!-- table -->
+		<div id="middle" style="overflow: auto;padding: 2%;">
+			<table border="2" align="center" style="text-align: center;height: 90%;">
+				<tr>
+					<th style="width: 10%;">Customer ID</th>
+					<th style="width: 20%;">Customer Name</th>
+					<th style="width: 20%;">Address</th>
+					<th style="width: 15%;">Phone</th>
+					<th style="width: 10%;">Type</th>
+					<th style="width: 15%;">ID</th>
+					<th style="width: 10%;">ACTION</th>
+				</tr>
+				<?php
+
+					$servername = "localhost";
+					$username = "root";
+					$password = "root";
+					$dbname = "dj_ads";
+					$conn = mysqli_connect($servername, $username, $password,$dbname);
+					
+					if (!$conn) {
+					  	die("Connection failed: " . mysqli_connect_error());
+					}
+					else{
+						$sql = "SELECT * FROM customers";
+						$result = mysqli_query($conn, $sql);
+						if (mysqli_num_rows($result) > 0) {
+						  while($cust = mysqli_fetch_assoc($result)) {
+						  	?>
+						  	<tr>
+						    <td><?php echo $cust["cust_id"] ?></td>
+						    <td><?php echo $cust["cust_name"] ?></td>
+						    <td><?php echo $cust["cust_address"] ?></td>
+						    <td><?php echo $cust["cust_phone"] ?></td>
+						    <td><?php echo $cust["cust_type"] ?></td>
+						    <td><?php echo $cust["cust_off_id"] ?></td>
+						    <td>
+						    	<button class="action" onclick="put_ad('<?php echo $cust['cust_id'] ?>')" value="<?php echo $cust['cust_id'] ?>">Put AD</button>
+						    	<form action="/Janambhumi Ads/bills/pay_bills.php" method="post">
+						    		<button class="action" value="<?php echo $cust["cust_id"] ?>" name="pay_btn">Pay bill</button>
+						    	</form>
+						    </td>
+						    </tr>
+						    <?php
+						  }
+						}
+						else{
+							?>
+							<tr>
+								<td colspan="7">No records found</td>
+							</tr>
+							<?php
+						}
+						mysqli_close($conn);
+					}
+				?>
+			</table>
+		</div>
+	</div>
+
 	<!-- The Modal -->
 	<div id="myModal" class="modal">
 	  <!-- Modal content -->
@@ -89,7 +111,50 @@
 	  </div>
 	</div>
 
+	<footer>
+		<p>All rights reserved 2020</p>
+	</footer>
 </body>
+<style>
+	/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
 <script>
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
